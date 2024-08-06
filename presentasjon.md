@@ -1,10 +1,8 @@
 ---
 marp: true
-size: 4:3
 title: Basic SQL
 theme: gaia
 class:
-  - lead
   - invert
 ---
 

@@ -2,6 +2,7 @@
 marp: true
 title: Basic SQL
 theme: gaia
+paginate: true
 class:
   - invert
 ---
@@ -142,7 +143,7 @@ ORDER BY last_name ASC;
 - `AVG(kolonne)` : Gjennomsnitt.
 - `MAX(kolonne)` : max verdi.
 - `MIN(kolonne)` : min verdi.
-    - **Merk**, `SUM` med `NULL` blir `NULL`, etc. 
+    - **Merk** :  `SUM` med `NULL` blir `NULL`, etc. 
 ```sql
 SELECT COUNT(*) AS "totalt antall ansatte"
 FROM employees;
@@ -179,9 +180,9 @@ HAVING COUNT(*) > 1;
 
 # JOINS
 
-`INNER JOIN`,`LEFT JOIN`,`RIGHT JOIN`,`FULL OUTER JOIN`
-
 ![mengder](https://i0.wp.com/flowingdata.com/wp-content/uploads/2011/10/Keytar-platypus.png?w=717&quality=80&ssl=1)
+
+
 
 ---
 
@@ -279,30 +280,19 @@ WHERE department_id = (SELECT department_id
 
 # CTEer
 ```sql
-/* 
-  Bra for organisering.
-  Deler opp hver kilde for å kunne enklere feilsøke.
-*/ 
-WITH 
-
-departments_cte AS (
+WITH departments_cte AS (
     SELECT *
     FROM departments
     WHERE department_name = 'Sales'
 ), 
-
 employees_cte AS (
     SELECT * 
     FROM employees
 ),
-
 SELECT first_name AS fornavn
     , last_name AS etternavn
 FROM employees_cte
-WHERE department_id = (
-    SELECT department_id
-    FROM departments_cte
-)
+WHERE department_id = (SELECT department_id FROM departments_cte)
 ;
 ```
 
